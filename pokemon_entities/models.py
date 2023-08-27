@@ -2,29 +2,30 @@ from django.db import models  # noqa F401
 
 
 class Pokemon(models.Model):
-    title = models.TextField(blank=True, null=True)
-    title_en = models.TextField(blank=True, null=True)
-    title_jp = models.TextField(blank=True, null=True)
-    image = models.ImageField(blank=True, null=True)
-    description = models.TextField(null=True, blank=True)
+    title_ru = models.TextField(blank=True, null=True, verbose_name='Название(rus)')
+    title_en = models.TextField(blank=True, null=True, verbose_name='Название(eng)')
+    title_jp = models.TextField(blank=True, null=True, verbose_name='Название(japan)')
+    image = models.ImageField(blank=True, null=True, verbose_name='Изображение')
+    description = models.TextField(null=True, blank=True, verbose_name='Описание')
     previous_evolution = models.ForeignKey(
         'self', related_name='next_evolution',
         null=True, blank=True,
         on_delete=models.CASCADE,
+        verbose_name='Прошлая эволюция'
         )
 
     def __str__(self) -> str:
-        return self.title
+        return self.title_ru
 
 
 class PokemonEntity(models.Model):
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
-    lat = models.FloatField()
-    lon = models.FloatField()
-    appeared_at = models.DateTimeField()
-    disappeared_at = models.DateTimeField()
-    level = models.IntegerField()
-    health = models.IntegerField()
-    strenght = models.IntegerField()
-    defence = models.IntegerField()
-    stamina = models.IntegerField()
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, verbose_name='Покемон')
+    lat = models.FloatField(verbose_name='Широта')
+    lon = models.FloatField(verbose_name='Долгота')
+    appeared_at = models.DateTimeField(verbose_name='Появился в')
+    disappeared_at = models.DateTimeField(verbose_name='Исчез в')
+    level = models.IntegerField(verbose_name='Уровень')
+    health = models.IntegerField(verbose_name='Здоровье')
+    strenght = models.IntegerField(verbose_name='Сила')
+    defence = models.IntegerField(verbose_name='Защита')
+    stamina = models.IntegerField(verbose_name='Выносливость')
