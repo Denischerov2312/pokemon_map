@@ -90,7 +90,7 @@ def show_pokemon(request, pokemon_id):
         }
     if next_pokemon:
         pokemon['next_evolution'] = {
-            'tilte_ru': next_pokemon.title_ru,
+            'title_ru': next_pokemon.title_ru,
             'pokemon_id': next_pokemon.id,
             'img_url': next_pokemon.image.url,
         }
