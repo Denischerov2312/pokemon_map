@@ -72,7 +72,7 @@ def show_pokemon(request, pokemon_id):
         )
 
     previous_pokemon = requested_pokemon.previous_evolution
-    next_pokemon = list(requested_pokemon.next_evolution.all())
+    next_pokemon = list(requested_pokemon.next_evolutions.all())
     next_pokemon = next_pokemon[0] if any(next_pokemon) else None
     pokemon = {
         'img_url': requested_pokemon.image.url,
@@ -89,7 +89,7 @@ def show_pokemon(request, pokemon_id):
             'img_url': previous_pokemon.image.url,
         }
     if next_pokemon:
-        pokemon['next_evolution'] = {
+        pokemon['next_evolutions'] = {
             'title_ru': next_pokemon.title_ru,
             'pokemon_id': next_pokemon.id,
             'img_url': next_pokemon.image.url,
