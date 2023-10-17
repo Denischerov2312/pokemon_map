@@ -29,6 +29,12 @@ def add_pokemon(folium_map, lat, lon, image_url=DEFAULT_IMAGE_URL):
     ).add_to(folium_map)
 
 
+def check_img_url(url):
+    if url:
+        return url
+    return DEFAULT_IMAGE_URL
+
+
 def show_all_pokemons(request):
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
     local_time = localtime()
@@ -46,7 +52,7 @@ def show_all_pokemons(request):
         img = pokemon.image
         pokemons_on_page.append({
             'pokemon_id': pokemon.id,
-            'img_url': request.build_absolute_uri(img.url) if img else None,
+            'img_url': request.build_absolute_uri(check_img_url(img.url)),
             'title_ru': pokemon.title_ru,
         })
 
@@ -67,7 +73,7 @@ def show_pokemon(request, pokemon_id):
         )
 
     pokemon = {
-        'img_url': requested_pokemon.image.url,
+        'img_url': check_img_url(requested_pokemon.image.url),
         'description': requested_pokemon.description,
         'title_ru': requested_pokemon.title_ru,
         'title_en': requested_pokemon.title_en,
@@ -79,14 +85,14 @@ def show_pokemon(request, pokemon_id):
         pokemon['previous_evolution'] = {
             'title_ru': previous_pokemon.title_ru,
             'pokemon_id': previous_pokemon.id,
-            'img_url': previous_pokemon.image.url,
+            'img_url': check_img_url(previous_pokemon.image.url),
         }
     next_pokemon = requested_pokemon.next_evolutions.first()
     if next_pokemon:
         pokemon['next_evolutions'] = {
             'title_ru': next_pokemon.title_ru,
             'pokemon_id': next_pokemon.id,
-            'img_url': next_pokemon.image.url,
+            'img_url': check_img_url(next_pokemon.image.url),
         }
 
     return render(request, 'pokemon.html', context={
