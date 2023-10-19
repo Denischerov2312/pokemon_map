@@ -38,8 +38,8 @@ def check_img_url(url):
 def show_all_pokemons(request):
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
     local_time = localtime()
-    entity = PokemonEntity.objects.filter(disappeared_at__gt=local_time, appeared_at__lt=local_time)
-    for entity in entity:
+    entities = PokemonEntity.objects.filter(disappeared_at__gt=local_time, appeared_at__lt=local_time)
+    for entity in entities:
         add_pokemon(
             folium_map, entity.lat,
             entity.lon,
